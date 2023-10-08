@@ -10,34 +10,37 @@ class WeatherApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+	String? selectedCity = "Ankara";
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('Weather App')),
+        title: const Text('Weather App'),
         backgroundColor: Theme.of(context).colorScheme.primary,
         actions: [
           IconButton(
-            onPressed: () {
-					Navigator.push(context, MaterialPageRoute(builder: (context) => const SelectCityWidget()));
+            onPressed: () async {
+					selectedCity = await Navigator.push(context, 
+					MaterialPageRoute(builder: (context) => const SelectCityWidget()));
+					print(selectedCity);
 				},
             icon: const Icon(Icons.search),
           ),
         ],
-      ),
+      ), 
       body: ListView(
-        children: const [
+        children: [
           Padding(
-            padding: EdgeInsets.only(top: 8.0),
-            child: Center(child: LocationWidget()),
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Center(child: LocationWidget(selectedCity: selectedCity ?? "Ankara",)),
           ),
-			 Padding(
+			 const Padding(
             padding: EdgeInsets.only(top: 8.0),
             child: Center(child: LastUpdateWidget()),
           ),
-			 Padding(
+			 const Padding(
             padding: EdgeInsets.only(top: 8.0),
             child: Center(child: WeatherImageWidget()),
           ),
-			 Padding(
+			 const Padding(
             padding: EdgeInsets.only(top: 16.0),
             child: Center(child: MaxMinDegreesWidget()),
           ),
